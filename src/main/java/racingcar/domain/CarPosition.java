@@ -8,7 +8,7 @@ public class CarPosition {
         return position;
     }
 
-    public void action(ControlType controlType) {
+    public void control(ControlType controlType) {
         position += controlType.getDistance();
     }
 }

@@ -19,6 +19,6 @@ public class Car {
     }
 
     public void control(ControlType controlType) {
-        carPosition.action(controlType);
+        carPosition.control(controlType);
     }
 }

@@ -1,6 +1,7 @@
 package racingcar.domain;
 
 import racingcar.ui.ConsoleMessage;
+import racingcar.ui.ConsoleView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import java.util.Set;
 public class Cars {
 
     private static final String DELIMITER = ",";
+    private static final String PROGRESS_BAR = "-";
 
     private final List<Car> cars;
 
@@ -54,5 +56,25 @@ public class Cars {
             cars.add(new Car(name.trim()));
         }
         return cars;
+    }
+
+    public void control() {
+        for (Car car : cars) {
+            car.control(Engine.getControlType());
+            printPosition(car);
+        }
+        ConsoleView.newLine();
+    }
+
+    private void printPosition(Car car) {
+        ConsoleView.printMessage("%s : %s%n", car.getCarName(), getPosition(car));
+    }
+
+    private String getPosition(Car car) {
+        StringBuilder progress = new StringBuilder();
+        for (int i = 0; i < car.getCarPosition(); i++) {
+            progress.append(PROGRESS_BAR);
+        }
+        return progress.toString();
     }
 }

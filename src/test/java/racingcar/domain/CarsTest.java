@@ -5,10 +5,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import racingcar.ui.ConsoleMessage;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("자동차 세트 도메인 테스트")
 class CarsTest {
@@ -44,5 +47,24 @@ class CarsTest {
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> new Cars("car1,car1"))
                 .withMessageMatching(ConsoleMessage.CARS_DUPLICATED_NAMES_ERROR.getMessage());
+    }
+
+    @Test
+    @DisplayName("자동차들 전진 성공")
+    void control() {
+        try (MockedStatic<Engine> mockedStatic = Mockito.mockStatic(Engine.class)) {
+            // given
+            mockedStatic.when(Engine::getControlType).thenReturn(ControlType.FORWARD);
+
+            // when
+            cars.control();
+
+            // then
+            assertAll(
+                    () -> assertThat(cars.getCar(0).getCarPosition()).isEqualTo(1),
+                    () -> assertThat(cars.getCar(1).getCarPosition()).isEqualTo(1),
+                    () -> assertThat(cars.getCar(2).getCarPosition()).isEqualTo(1)
+            );
+        }
     }
 }

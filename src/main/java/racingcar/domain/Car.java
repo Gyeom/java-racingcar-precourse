@@ -21,4 +21,12 @@ public class Car {
     public void control(ControlType controlType) {
         carPosition.control(controlType);
     }
+
+    public boolean isAheadPosition(Winners winners) {
+        return this.getCarPosition() > winners.getPosition();
+    }
+
+    public boolean isBehindPosition(Winners winners) {
+        return this.getCarPosition() < winners.getPosition();
+    }
 }

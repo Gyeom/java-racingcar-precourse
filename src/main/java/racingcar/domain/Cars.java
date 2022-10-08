@@ -77,4 +77,8 @@ public class Cars {
         }
         return progress.toString();
     }
+
+    public Winners getWinners() {
+        return new Winners(cars);
+    }
 }
